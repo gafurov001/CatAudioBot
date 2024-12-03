@@ -16,6 +16,8 @@ from models import create_table, Audios
 TOKEN = bot_token
 dp = Dispatcher()
 
+admin_id = [6903754733, 5760868166]
+
 cache = dict()
 
 
@@ -51,6 +53,24 @@ async def delete_audio(callback: CallbackQuery, bot: Bot):
     await command_start_handler(callback.message, bot, callback.from_user.id)
 
 
+@dp.message(F.text == '/admin')
+async def count_user_job(message: Message):
+    if message.from_user.id in admin_id:
+        res = await Audios.select()
+        res = [i for i in res]
+        d = {}
+        for i in res:
+            if d.get(i[-1]):
+                d[i[-1]] += 1
+                continue
+            d[i[-1]] = 1
+
+        res = ""
+        for id, key in enumerate(d):
+            url = f'tg://user?id={int(key)}'
+            res += ''.join(f'<a href="{url}">{id+1}-user</a> = {d[key]}\n')
+        await message.answer(res, parse_mode=ParseMode.HTML)
+
 @dp.message()
 async def audio_save(message: Message, bot: Bot):
     if message.reply_to_message and message.reply_to_message.audio:
@@ -60,7 +80,6 @@ async def audio_save(message: Message, bot: Bot):
         if is_exist:
             await Audios.create(audio_location=path, text=message.text)
             await command_start_handler(message, bot)
-
 
 
 async def main() -> None:

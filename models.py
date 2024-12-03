@@ -52,6 +52,7 @@ class Audios(Base):
     id: Mapped[str] = mapped_column(Integer, primary_key=True)
     audio_location: Mapped[str] = mapped_column(Text)
     text: Mapped[str] = mapped_column(Text)
+    user_tlg_id: Mapped[str] = mapped_column(Text)
 
 
 def create_table():
