@@ -78,7 +78,7 @@ async def audio_save(message: Message, bot: Bot):
         path = f"edited_audios/{file_name}"
         is_exist = os.path.exists(path)
         if is_exist:
-            await Audios.create(audio_location=path, text=message.text)
+            await Audios.create(audio_location=path, text=message.text, user_tlg_id=message.from_user.id)
             await command_start_handler(message, bot)
 
 
