@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 
-import redis
 from aiogram import Dispatcher, Bot, F
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -11,7 +10,7 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message, FSInputFile, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
 from audio_edit import bolaklarga_ajrat_va_saqlash
-from config import bot_token, redis_host, redis_port
+from config import bot_token
 from models import create_table, Audios
 
 TOKEN = bot_token
